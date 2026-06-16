@@ -1,0 +1,2 @@
+<?php
+namespace App\Controllers; use App\Core\{Controller,Auth}; use App\Services\DrawService; class DrawController extends Controller{public function index(){ $this->view('draws/index',['title'=>'قرعه‌کشی']);} public function run(){ $this->requireCsrf();try{$r=(new DrawService)->run((int)($_POST['fund_id']??0),Auth::user()['id']??0);$this->json(['ok'=>true,'result'=>$r]);}catch(\Throwable $e){$this->json(['ok'=>false,'message'=>$e->getMessage()],422);}}}

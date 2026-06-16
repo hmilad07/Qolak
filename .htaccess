@@ -1,0 +1,30 @@
+# Qolak root fallback for shared hosting / Cpanel.
+# Preferred setup: set the domain document root to /public.
+# If the project is installed in a subfolder such as /Q, these rules still
+# serve /Q/assets/... from /Q/public/assets/... before the PHP router runs.
+DirectoryIndex index.php
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /Q/
+
+    # Static files. These must be handled before the front controller;
+    # otherwise Apache/PHP returns an HTML 404 page and browsers reject CSS/JS
+    # with a MIME type error like text/html instead of text/css/application-js.
+    RewriteRule ^assets/(.*)$ public/assets/$1 [L,NC]
+    RewriteRule ^uploads/(.*)$ public/uploads/$1 [L,NC]
+
+    # If the request already maps to a real file or directory in the project,
+    # let Apache serve it directly.
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^ - [L]
+
+    # Route all application URLs to the shared-hosting entry point.
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+<FilesMatch "^(composer\.(json|lock)|README\.md)$">
+    Require all denied
+</FilesMatch>
