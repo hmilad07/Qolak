@@ -1,0 +1,2 @@
+<?php
+require __DIR__.'/../app/Helpers/helpers.php';spl_autoload_register(function($c){$p=__DIR__.'/../'.str_replace('\\','/',$c).'.php';$p=str_replace('App/','app/',$p);if(file_exists($p))require $p;});$app=require __DIR__.'/../config/app.php';date_default_timezone_set($app['timezone']);session_name($app['session_name']);session_start();\App\Middleware\SecurityHeaders::apply();$router=require __DIR__.'/../routes/web.php';$router->dispatch($_SERVER['REQUEST_METHOD'],$_SERVER['REQUEST_URI']);

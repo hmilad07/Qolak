@@ -1,0 +1,2 @@
+<?php
+namespace App\Core; abstract class Model{protected string $table; protected function db(){return Database::pdo();} public function all():array{return $this->db()->query("SELECT * FROM {$this->table} ORDER BY id DESC")->fetchAll();} public function find(int $id):?array{$s=$this->db()->prepare("SELECT * FROM {$this->table} WHERE id=?");$s->execute([$id]);return $s->fetch()?:null;} public function delete(int $id):bool{$s=$this->db()->prepare("DELETE FROM {$this->table} WHERE id=?");return $s->execute([$id]);}}

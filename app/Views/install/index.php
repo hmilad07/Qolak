@@ -1,0 +1,1 @@
+<div class="card"><h2>راهنمای نصب</h2><ol><li>اطلاعات دیتابیس را در config/database.php یا متغیرهای محیطی وارد کنید.</li><li>فایل database/schema.sql را در MySQL 8 اجرا کنید.</li><li>کاربر پیش‌فرض: admin / رمز: password</li></ol></div>

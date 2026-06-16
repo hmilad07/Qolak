@@ -1,0 +1,2 @@
+<?php
+namespace App\Services; use App\Core\Database; class AuditLogger{public static function log(string $action,string $entity='',?int $entityId=null,array $meta=[]):void{$s=Database::pdo()->prepare('INSERT INTO audit_logs(user_id,action,entity,entity_id,ip,user_agent,metadata) VALUES(?,?,?,?,?,?,?)');$s->execute([$_SESSION['user']['id']??null,$action,$entity,$entityId,$_SERVER['REMOTE_ADDR']??'',$_SERVER['HTTP_USER_AGENT']??'',json_encode($meta,JSON_UNESCAPED_UNICODE)]);}}
