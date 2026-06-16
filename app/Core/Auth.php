@@ -1,0 +1,2 @@
+<?php
+namespace App\Core; final class Auth{public static function user():?array{return $_SESSION['user']??null;} public static function check():bool{return (bool)self::user();} public static function login(array $u):void{session_regenerate_id(true);$_SESSION['user']=$u;} public static function logout():void{$_SESSION=[];session_destroy();} public static function can(string $role):bool{$u=self::user();return $u && ($u['role']==='super_admin'||$u['role']===$role);} }
