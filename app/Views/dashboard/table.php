@@ -1,1 +1,35 @@
-<div class="card"><h2><?= e($title) ?></h2><form class="ajax wizard" method="post" action="<?= e(url('admin/' . $table)) ?>"><?= csrf_field() ?><p>فرم عمومی Ajax برای ثبت سریع؛ فیلدهای اختصاصی هر ماژول از Migration پیروی می‌کنند.</p><input name="name" placeholder="نام/عنوان"><input name="status" placeholder="وضعیت" value="active"><button>ثبت</button><div class="msg"></div></form><div class="table"><table><thead><tr><?php foreach(array_keys($rows[0]??['id'=>'']) as $c): ?><th><?= e($c) ?></th><?php endforeach ?></tr></thead><tbody><?php foreach($rows as $row): ?><tr><?php foreach($row as $v): ?><td><?= e($v) ?></td><?php endforeach ?></tr><?php endforeach ?></tbody></table></div></div>
+<div class="card">
+    <h2><?= e(persian_table_name($table)) ?></h2>
+
+    <form class="ajax wizard" method="post" action="<?= e(url('admin/' . $table)) ?>">
+        <?= csrf_field() ?>
+        <label>نام یا عنوان<input name="name" placeholder="نام را وارد کنید"></label>
+        <label>وضعیت<input name="status" placeholder="فعال" value="active"></label>
+        <button>ذخیره</button>
+        <div class="msg"></div>
+    </form>
+
+    <div class="table" role="region" aria-label="جدول <?= e(persian_table_name($table)) ?>">
+        <table>
+            <thead>
+                <tr>
+                    <?php foreach (array_keys($rows[0] ?? ['id' => '']) as $column): ?>
+                        <th><?= e(persian_label($column)) ?></th>
+                    <?php endforeach ?>
+                </tr>
+            </thead>
+            <tbody>
+                <?php if (!$rows): ?>
+                    <tr><td>رکوردی ثبت نشده است.</td></tr>
+                <?php endif ?>
+                <?php foreach ($rows as $row): ?>
+                    <tr>
+                        <?php foreach ($row as $value): ?>
+                            <td><?= e($value) ?></td>
+                        <?php endforeach ?>
+                    </tr>
+                <?php endforeach ?>
+            </tbody>
+        </table>
+    </div>
+</div>
