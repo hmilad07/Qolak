@@ -1,0 +1,1 @@
+<div class="card"><h2>اجرای قرعه‌کشی عادلانه</h2><p>انتخاب برنده با random_int، ثبت Seed، شرکت‌کنندگان و لاگ کامل انجام می‌شود.</p><form class="ajax" method="post" action="/draws/run"><?= csrf_field() ?><label>شناسه صندوق<input name="fund_id" type="number" required></label><button>اجرای قرعه‌کشی</button><div class="msg"></div></form></div>
