@@ -1,0 +1,23 @@
+# Qolak root fallback for shared hosting / Cpanel.
+# Preferred setup: set the domain document root to /public.
+# If that is not possible, this file routes web requests into /public.
+DirectoryIndex index.php
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Serve existing public assets directly.
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Route all application URLs to the root fallback front controller.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+<FilesMatch "^(composer\.(json|lock)|README\.md)$">
+    Require all denied
+</FilesMatch>
